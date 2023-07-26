@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>AI</title>
+    <style>
+      body{
+        background-color:black;
+        color: aliceblue;
+        max-width: 2000px !important;
+        margin: 0 !important;
+      }
+      .mic-icon{
+        color:black;
+        position: absolute;
+        top: 7px;
+        right: 20px;
+        font-size: 22px;
+      }
+
+    </style>
+</head>
+<body id="bg" style="background-image: url('{% static "images/banner.jpg"%}')";>
+    <!-- template.html -->
+    <div class="container text-center">
+        <div class="row">
+          <div class="col">
+           
+          </div>
+          <div class="col-6">
+            <form action="{% url 'jarvas' %}" method="POST" enctype="multipart/form-data" id="formaction">
+                {% csrf_token %}
+                
+                <!-- Text Comment -->
+                
+                              
+                 
+               <div style="position: relative;margin-top: 150px;">
+               
+                <input name="text_comment" class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Search...">
+                <i class="fa-solid fa-microphone mic-icon" onclick="runSpeechRecog(event)"></i>
+                <p id="action" style="color: grey;font-weight: 800; padding: 0; padding-left: 2rem;"></p>
+                <p id="output" style="color: grey;font-weight: 800; padding: 0; padding-left: 2rem;"></p>
+              </div><br>
+                      
+                           
+
+
+                
+                <button type="submit" class="btn btn-primary">Submit</button><br><br>
+                
+                
+               
+              </form>
+          </div>
+          <div class="col">
+           
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+           
+          </div>
+          <div class="col-5">
+           
+          </div>
+          <div class="col">
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-sm-12">{% if flash_news %}
+            <h1>Flash News</h1>
+            {% for news in flash_news %}
+            
+                <h5>{{ news.title }}</h5>
+                <h11>{{ news.description }}</h11>
+                <p>{{ news.source }}</p>
+                <p>{{new.created_at }}</p>
+                <hr>
+            {% endfor %}
+        {% endif %}
+        {% if weather_report %}
+            <h1>Weather Report</h1>
+            <p>{{ weather_report }}</p>
+        {% endif %}
+        {% if location %}
+        <h1>{{location}}</h1>
+
+        {% endif %}
+        {% if results%}
+          <h1>Latest News</h1>
+          {% for result in results %}
+          
+          <h1>{{ result.title }}</h1>
+          <p>For more info, visit: <a href="{{ result.url }}">{{ result.url }}</a></p>
+          {% endfor %}
+      {% endif %}
+      {% if google_search_results %}
+      <h2>Search Results:</h2>
+      {{ google_search_results| safe }}
+      {% endif %}
+      
+        {% if wikipedia_result %} 
+        <h1>According to wikipedia result</h1>  
+       
+        <p>{{ wikipedia_result }}</p>    
+        {% endif %}
+        {% if current_time %}
+        <h1>current time</h1>
+            <h1>{{ current_time}}</h1>    
+            {% endif %}
+        {% if tamil_news_results %}
+        <h2>Tamil News</h2>
+        <ul>
+            {% for news in tamil_news_results %}
+                <li>
+                    <a href="{{ news.url }}">{{ news.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        {% if youtube_results %}
+    <div class="youtube-results">
+        <h3>YouTube Results:</h3>
+        <ul>
+            {% for result in youtube_results %}
+                <li>{{ result }}</li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+        {% if song_played %}
+    <div class="song-played">
+        <h3>Song Played:</h3>
+        <p>{{ song_played }}</p>
+    </div>
+    {% endif %}
+    </div>
+      
+      </div>
+          <div class="col-sm-2">
+          </div>
+         
+           
+  </div>
+  
+          
+        </div>  
+      
+        
+        
+
+        
+
+        
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+   integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+ 
+  </script>
+  <script src="./static/script.js"></script>
+</body>
+</html>
